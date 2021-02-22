@@ -1,4 +1,5 @@
 # RobotUI
+![Preview image showing fading text with icons to show user and robotconversation](https://i.imgur.com/l9dvdfA.png)
  This is the Robot UI for group 860's 8th semester project. It features signalR hooked up to a blazor frontend
 
 **How to use:**
