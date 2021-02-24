@@ -181,17 +181,27 @@ app {
         display: block;
     }
 }
+
 .msg-wrapper {
     width: 100%;
-    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+}
+.msg-wrapper-rob {
+    justify-content: flex-end;
+}
+.msg-wrapper-dbg {
+    justify-content: flex-end;
 }
 .message-in {
     font-family: 'Raleway', sans-serif;
     font-size: 32px;
-    display:inline-block;
-    vertical-align:bottom;
-    width:80%;
-    padding-left:10px;
+    display: inline-block;
+    vertical-align: bottom;
+    padding-left: 10px;
+    padding-right: 10px;
+    flex: 1 1 80%;
+    max-width:80%;
 }
 
 .msg-wrapper:nth-last-child(2) {
@@ -209,13 +219,19 @@ app {
 .msg-wrapper:nth-last-child(5) {
     opacity: 0.15;
 }
+
 .msg-icon {
     display: inline-block;
     vertical-align: top;
+    flex: 1 1 60px;
+    max-width: 60px;
 }
+
 .msg-type-usr {
     color: #004400;
+    order: 2;
 }
+
 .msg-icon-usr:before {
     font-family: "Font Awesome 5 Free";
     content: "\f007";
@@ -225,38 +241,64 @@ app {
     font-weight: 900;
     color: #006600;
     font-size: 32px;
+    order: 1;
 }
+
 .msg-type-rob {
-    float: right;
+    order: 1;
+    text-align: right;
     color: #2f60ad;
 }
-.msg-icon-rob:before {
-    font-family: "Font Awesome 5 Free";
-    content: "\f544";
-    display: inline-block;
-    padding-right: 3px;
-    vertical-align: middle;
-    font-weight: 900;
-    color: #4287f5;
-    font-size: 32px;
-}
-.msg-type-dbg {
-    float: right;
-    color: #000066;
-}
-.msg-icon-dbg:before {
-    font-family: "Font Awesome 5 Free";
-    content: "\f05a";
-    display: inline-block;
-    padding-right: 3px;
-    vertical-align: middle;
-    font-weight: 900;
-    color: #0000FF;
-    font-size: 32px;
-}
-.msg-type-err{
 
+.msg-icon-rob {
+    order: 2;
+    text-align: right;
 }
+
+    .msg-icon-rob:before {
+        font-family: "Font Awesome 5 Free";
+        content: "\f544";
+        display: inline-block;
+        padding-right: 3px;
+        text-align: right;
+        vertical-align: middle;
+        font-weight: 900;
+        color: #4287f5;
+        font-size: 32px;
+        order: 2;
+        width: 100%;
+    }
+
+.msg-type-dbg {
+    text-align: right;
+    color: #000066;
+    order: 1;
+}
+
+.msg-icon-dbg {
+    order: 2;
+    text-align: right;
+}
+
+    .msg-icon-dbg:before {
+        font-family: "Font Awesome 5 Free";
+        content: "\f05a";
+        display: inline-block;
+        padding-right: 3px;
+        vertical-align: middle;
+        font-weight: 900;
+        text-align: right;
+        color: #0000FF;
+        font-size: 32px;
+        order: 2;
+        width: 100%;
+    }
+
+.msg-type-err {
+    order: 2;
+    color: #880000;
+}
+
 .msg-icon-err:before {
     font-family: "Font Awesome 5 Free";
     content: "\f5b4";
@@ -266,4 +308,5 @@ app {
     font-weight: 900;
     color: #FF0000;
     font-size: 32px;
+    order: 1;
 }

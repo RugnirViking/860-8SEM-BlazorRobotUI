@@ -23,7 +23,7 @@
     <!-- For each of the last 5 messages (older ones are hidden) -->
     @foreach (var message in messages.Skip(Math.Max(0, messages.Count() - 5)))
     {
-    <div class="msg-wrapper xyz-in">
+    <div class="msg-wrapper xyz-in msg-wrapper-@message.msgType">
         <div class="msg-icon msg-icon-@message.msgType"></div><div class="message-in msg-type-@message.msgType" @key=message.key>@message.message</div>
     </div>
     }
