@@ -2,15 +2,30 @@
 
 import asyncio
 import websockets
+from io import StringIO
+from PIL import Image
+step=0;
 
 async def hello():
+    global step
     uri = "ws://localhost:8765"
-    async with websockets.connect(uri) as websocket:
-        await websocket.send("rob||Hello world!")
-        await websocket.send("usr||Hello robot friend :)")
-        await websocket.send("rob||How are you doing today?")
-        await websocket.send("usr||I am doing fine thank you robot. I hope we can work together effectively.")
-
+    print(step)
+    if step==0:
+        step=1
+        async with websockets.connect(uri) as websocket:
+            await websocket.send("rob||Hello world!")
+    elif step==1:
+        step=2
+        async with websockets.connect(uri) as websocket:
+            await websocket.send("usr||Hello robot friend :)")
+    elif step==2:
+        step=3
+        async with websockets.connect(uri) as websocket:
+            await websocket.send("rob||How are you doing today?")
+    elif step==3:
+        step=0
+        async with websockets.connect(uri) as websocket:
+            await websocket.send("usr||I am doing fine thank you robot. I hope we can work together effectively.")
 
 
 

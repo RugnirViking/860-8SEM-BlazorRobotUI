@@ -33,6 +33,12 @@
         </div>
         <div class="pictureBar">
             <div>
+                @{
+                    <img src="@(cutImage)" />
+                }
+                @{
+                    <img src="@(overviewImage)" />
+                }
                 <img src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Cropped Object View">
                 <img src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Scene View">
             </div>
@@ -44,6 +50,8 @@
         private List<keyMessage> messages = new List<keyMessage>();
         private string userInput;
         private string messageInput;
+        private Image cutImage;
+        private Image overviewImage;
 
         protected override async Task OnInitializedAsync()
         {
@@ -52,20 +60,37 @@
                 .Build();
 
             hubConnection.On<string, string, string>("ReceiveMessage", (user, msgType, message) =>
-             {
-                 var encodedMsg = $"{user}: {message}";
-                 keyMessage msg = new keyMessage();
-                 msg.message = message;
-                 msg.key = 0;
-                 msg.msgType = msgType;
-                 if (messages.Count > 0)
-                 {
-                     msg.key = messages.Last().key + 1;
-                 }
-                 messages.Add(msg);
-                 StateHasChanged();
-             });
+            {
+                var encodedMsg = $"{user}: {message}";
+                keyMessage msg = new keyMessage();
+                msg.message = message;
+                msg.key = 0;
+                msg.msgType = msgType;
+                if (messages.Count > 0)
+                {
+                    msg.key = messages.Last().key + 1;
+                }
+                messages.Add(msg);
+                StateHasChanged();
+            });
+            hubConnection.On<string, string, string>("RecieveImage", (user, msgType, message) =>
+            {
+                keyImage msg = new keyImage();
+                Image image;
+                byte[] bytes = Convert.FromBase64String(message);
 
+                using (MemoryStream ms = new MemoryStream(bytes))
+                {
+                    image = Image.FromStream(ms);
+                }
+                if (user == "1"){
+                    cutImage = image;
+                } else
+                {
+                    overviewImage = image;
+                }
+                StateHasChanged();
+            });
             await hubConnection.StartAsync();
         }
 

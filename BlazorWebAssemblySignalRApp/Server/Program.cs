@@ -1,4 +1,5 @@
-﻿using Fleck;
+﻿using BlazorWebAssemblySignalRApp.Server.Controllers;
+using Fleck;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
@@ -13,26 +14,14 @@ namespace BlazorWebAssemblySignalRApp.Server
 {
     public class Program
     {
-        private static IHubContext<Hubs.ChatHub> _hubContext;
+        private static IHubContext<Hubs.SignalRHub> _hubContext;
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            _hubContext = (IHubContext<Hubs.ChatHub>)host.Services.GetService(typeof(IHubContext<Hubs.ChatHub>));
-            var server = new WebSocketServer("ws://0.0.0.0:8765");
-            server.Start(socket =>
-            {
-                socket.OnOpen = () => Console.WriteLine("Open!");
-                socket.OnClose = () => Console.WriteLine("Close!");
-                socket.OnMessage = onMessageRecievedAsync;
+            _hubContext = (IHubContext<Hubs.SignalRHub>)host.Services.GetService(typeof(IHubContext<Hubs.SignalRHub>));
+            WebsocketsController wsc = new WebsocketsController(_hubContext);
 
-            });
             host.Run();
-        }
-
-        private static async void onMessageRecievedAsync(string message)
-        {
-            var splitMsg = message.Split("||");
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", "python-user", splitMsg[0], splitMsg[1]);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

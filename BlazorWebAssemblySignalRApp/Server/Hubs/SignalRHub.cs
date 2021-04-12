@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Fleck;
 using Microsoft.AspNetCore.SignalR;
+using System.Drawing;
 
 namespace BlazorWebAssemblySignalRApp.Server.Hubs
 {
-    public class ChatHub : Hub
+    public class SignalRHub : Hub
     {
-        public ChatHub()
+        public SignalRHub()
         {
         }
 
@@ -23,6 +24,10 @@ namespace BlazorWebAssemblySignalRApp.Server.Hubs
         public async Task SendMessage(string user, string message)
         {
             await Clients.All.SendAsync("ReceiveMessage", user,"usr", message);
+        }
+        public async Task SendImage(string imagenum, Image img)
+        {
+            await Clients.All.SendAsync("ReceiveImage", imagenum, "usr", img);
         }
     }
 }
