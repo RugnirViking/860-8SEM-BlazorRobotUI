@@ -28,11 +28,19 @@ namespace BlazorWebAssemblySignalRApp.Server.Controllers
         private async void onMessageRecievedAsync(string message)
         {
             var splitMsg = message.Split("||");
-            if (splitMsg[0]=="imgs")
+            if (splitMsg[0] == "imgs")
             {
 
-                await _hubContext.Clients.All.SendAsync("RecieveImage", "1", "1", GetImage(splitMsg[1]));
-                //await _hubContext.Clients.All.SendAsync("RecieveImage", "2", "2", splitMsg[2]);
+                await _hubContext.Clients.All.SendAsync("RecieveImage", "1", "1", splitMsg[1]);
+                await _hubContext.Clients.All.SendAsync("RecieveImage", "2", "2", splitMsg[2]);
+            }
+            else if (splitMsg[0] == "img1")
+            {
+                await _hubContext.Clients.All.SendAsync("RecieveImage", "1", "1", splitMsg[1]);
+            }
+            else if (splitMsg[0] == "img2")
+            {
+                await _hubContext.Clients.All.SendAsync("RecieveImage", "2", "2", splitMsg[1]);
             }
             else
             {
@@ -58,6 +66,6 @@ namespace BlazorWebAssemblySignalRApp.Server.Controllers
                 image = Image.FromStream(ms);
             }
             return image;
-        } 
+        }
     }
 }

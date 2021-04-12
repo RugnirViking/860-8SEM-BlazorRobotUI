@@ -34,13 +34,11 @@
         <div class="pictureBar">
             <div>
                 @{
-                    <img src="@(cutImage)" />
+                    <img src="data:image/png;base64,@cutImage" alt="Target Object" class="previewImg" />
                 }
                 @{
-                    <img src="@(overviewImage)" />
+                    <img src="data:image/png;base64,@overviewImage" alt="Overview Image" class="previewImg" />
                 }
-                <img src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Cropped Object View">
-                <img src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Scene View">
             </div>
             Status: Moving manipulator into position
         </div>
@@ -50,8 +48,8 @@
         private List<keyMessage> messages = new List<keyMessage>();
         private string userInput;
         private string messageInput;
-        private Image cutImage;
-        private Image overviewImage;
+        private string cutImage;
+        private string overviewImage;
 
         protected override async Task OnInitializedAsync()
         {
@@ -73,7 +71,7 @@
                 messages.Add(msg);
                 StateHasChanged();
             });
-            hubConnection.On<string, string, Image>("RecieveImage", (user, msgType, image) =>
+            hubConnection.On<string, string, string>("RecieveImage", (user, msgType, image) =>
             {
                 keyImage msg = new keyImage();
 

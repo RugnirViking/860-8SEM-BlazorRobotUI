@@ -256,7 +256,9 @@ app {
     color: #004400;
     order: 2;
 }
-
+.previewImg {
+    width: 400px;
+}
 .msg-icon-usr:before {
     font-family: "Font Awesome 5 Free";
     content: "\f007";
