@@ -59,7 +59,7 @@ namespace BlazorWebAssemblySignalRApp.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapHub<SignalRHub>("/chathub");
+                endpoints.MapHub<SignalRHub>("/signalrhub");
                 endpoints.MapFallbackToFile("index.html");
             });
         }
