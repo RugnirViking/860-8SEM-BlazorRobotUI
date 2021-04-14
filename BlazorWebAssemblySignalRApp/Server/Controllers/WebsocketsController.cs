@@ -42,6 +42,20 @@ namespace BlazorWebAssemblySignalRApp.Server.Controllers
             {
                 await _hubContext.Clients.All.SendAsync("RecieveImage", "2", "2", splitMsg[1]);
             }
+            else if (splitMsg[0] == "status")
+            {
+                await _hubContext.Clients.All.SendAsync("RecieveStatus", splitMsg[1]);
+            }
+            else if (splitMsg[0] == "modStatus")
+            {
+                int mod=0;
+                int col=0;
+                bool valid = Int32.TryParse(splitMsg[1], out mod) && Int32.TryParse(splitMsg[2], out col);
+                if (valid)
+                {
+                    await _hubContext.Clients.All.SendAsync("RecieveStatus", mod, col);
+                }
+            }
             else
             {
                 await _hubContext.Clients.All.SendAsync("ReceiveMessage", "python-user", splitMsg[0], splitMsg[1]);

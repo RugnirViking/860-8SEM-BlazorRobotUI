@@ -29,5 +29,13 @@ namespace BlazorWebAssemblySignalRApp.Server.Hubs
         {
             await Clients.All.SendAsync("ReceiveImage", imagenum, "usr", img);
         }
+        public async Task SendStatus(string status)
+        {
+            await Clients.All.SendAsync("ReceiveStatus", status);
+        }
+        public async Task SendModStatus(int module, int status)
+        {
+            await Clients.All.SendAsync("ReceiveModStatus", module,status);
+        }
     }
 }
