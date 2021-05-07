@@ -30,21 +30,20 @@ namespace BlazorWebAssemblySignalRApp.Server.Controllers
             var splitMsg = message.Split("||");
             if (splitMsg[0] == "imgs")
             {
-
-                await _hubContext.Clients.All.SendAsync("RecieveImage", "1", "1", splitMsg[1]);
-                await _hubContext.Clients.All.SendAsync("RecieveImage", "2", "2", splitMsg[2]);
+                await _hubContext.Clients.All.SendAsync("ReceiveImage", "1", splitMsg[1]);
+                await _hubContext.Clients.All.SendAsync("ReceiveImage", "2", splitMsg[1]);
             }
             else if (splitMsg[0] == "img1")
             {
-                await _hubContext.Clients.All.SendAsync("RecieveImage", "1", "1", splitMsg[1]);
+                await _hubContext.Clients.All.SendAsync("ReceiveImage", "1", splitMsg[1]);
             }
             else if (splitMsg[0] == "img2")
             {
-                await _hubContext.Clients.All.SendAsync("RecieveImage", "2", "2", splitMsg[1]);
+                await _hubContext.Clients.All.SendAsync("ReceiveImage", "2", splitMsg[1]);
             }
             else if (splitMsg[0] == "status")
             {
-                await _hubContext.Clients.All.SendAsync("RecieveStatus", splitMsg[1]);
+                await _hubContext.Clients.All.SendAsync("ReceiveStatus", splitMsg[1]);
             }
             else if (splitMsg[0] == "modStatus")
             {
@@ -53,7 +52,7 @@ namespace BlazorWebAssemblySignalRApp.Server.Controllers
                 bool valid = Int32.TryParse(splitMsg[1], out mod) && Int32.TryParse(splitMsg[2], out col);
                 if (valid)
                 {
-                    await _hubContext.Clients.All.SendAsync("RecieveStatus", mod, col);
+                    await _hubContext.Clients.All.SendAsync("ReceiveStatus", mod, col);
                 }
             }
             else
