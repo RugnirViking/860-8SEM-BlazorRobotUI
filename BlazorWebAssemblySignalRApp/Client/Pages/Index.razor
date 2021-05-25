@@ -6,49 +6,15 @@
 <div class="flexrow">
     <div class="messageContent">
         <div class="colFlex">
-            <div class="sendMessagesSection">
-                <div class="form-group">
-                    <label>
-                        User:
-                        <input @bind="userInput" />
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>
-                        Message:
-                        <input @bind="messageInput" size="50" />
-                    </label>
-                </div>
-                <button @onclick="Send" disabled="@(!IsConnected)">Send</button>
-
-                <hr>
-            </div>
-            <div id="messagesList" xyz="down-100%">
+            <div id="messagesList" xyz="fade down-100% back-5">
                 <!-- For each of the last 5 messages (older ones are hidden) -->
-                @foreach (var message in messages.Skip(Math.Max(0, messages.Count() - 12)))
+                @foreach (var message in messages.Skip(Math.Max(0, messages.Count() - 5)))
                 {
                     <div class="msg-wrapper xyz-in msg-wrapper-@message.msgType">
                         <div class="msg-icon msg-icon-@message.msgType"></div>
                         <div class="message-in msg-type-@message.msgType" @key=message.key>@message.message</div>
                     </div>
                 }
-            </div>
-        </div>
-
-        <div class="messageSectionFooter">
-            <div class="statusRow">
-                <div id="status1" class="status @status1class">
-                    Module 1 Status
-                </div>
-                <div id="status2" class="status @status2class">
-                    Module 2 Status
-                </div>
-                <div id="status3" class="status @status3class">
-                    Module 3 Status
-                </div>
-                <div id="status4" class="status @status4class">
-                    Module 4 Status
-                </div>
             </div>
         </div>
     </div>
@@ -75,9 +41,6 @@
                 }
             }
         </div>
-        @{
-            <span>Status: @currentStatus</span>
-        }
     </div>
 </div>
 @code {
@@ -87,28 +50,6 @@
     private string messageInput;
     private string cutImage = "";
     private string overviewImage = "";
-    private string currentStatus;
-    private string status1class = "greenstatus";
-    private string status2class = "redstatus";
-    private string status3class = "yellowstatus";
-    private string status4class = "greenstatus";
-    
-    private string GetStatusClassString(int colNum)
-    {
-        switch (colNum)
-        {
-            case 1:
-                return "greenstatus";
-            case 2:
-                return "yellowstatus";
-            case 3:
-                return "redstatus";
-            case 4:
-                return "purplestatus";
-            default:
-                return "";
-        }
-    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -128,32 +69,6 @@
                 msg.key = messages.Last().key + 1;
             }
             messages.Add(msg);
-            StateHasChanged();
-        });
-        hubConnection.On<string>("ReceiveStatus", (message) =>
-        {
-            currentStatus = message;
-            StateHasChanged();
-        });
-        hubConnection.On<int, int>("ReceiveModStatus", (statusNum, statusCol) =>
-        {
-            switch (statusNum)
-            {
-                case 1:
-                    status1class = GetStatusClassString(statusCol);
-                    break;
-                case 2:
-                    status2class = GetStatusClassString(statusCol);
-                    break;
-                case 3:
-                    status3class = GetStatusClassString(statusCol);
-                    break;
-                case 4:
-                    status4class = GetStatusClassString(statusCol);
-                    break;
-                default:
-                    break;
-            }
             StateHasChanged();
         });
         hubConnection.On<string, string>("ReceiveImage", (imageType, image) =>

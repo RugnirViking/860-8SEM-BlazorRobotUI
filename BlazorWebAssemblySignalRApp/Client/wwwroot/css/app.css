@@ -45,7 +45,7 @@ app {
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
+        
 .sidebar {
     background-image: linear-gradient(180deg, rgb(16 60 144) 0%, #0185a2 70%);
 }
@@ -97,8 +97,12 @@ app {
                 color: white;
             }
 
-html {
+html, body, app {
     height: 100%;
+}
+
+app {
+    background-image: linear-gradient(180deg, rgb(16 60 144) 0%, #0185a2 70%);
 }
 
 .content {
@@ -221,6 +225,10 @@ html {
     flex: 3;
     display: flex;
     flex-direction: column;
+    background-color: #FFF;
+    border-radius: 20px;
+    margin: 0 1em;
+    height: 90%;
 }
 
 .colFlex {
@@ -231,6 +239,13 @@ html {
 .messageSectionFooter {
     flex-shrink: 0;
     height: 100px;
+}
+
+header {
+    color: #FFF;
+    display: flex;
+    justify-content: center;
+    padding: 2em 0;
 }
 
 .statusRow {
@@ -266,8 +281,8 @@ html {
     background-color: #800080
 }
 .pictureBar {
-    padding: 8px;
-    background-image: linear-gradient(180deg, rgb(16 60 144) 0%, #0185a2 70%);
+    padding-right: 1em;
+    /*background-image: linear-gradient(180deg, rgb(16 60 144) 0%, #0185a2 70%);*/
     color: #fff;
     font-size: 1.1rem;
 }
